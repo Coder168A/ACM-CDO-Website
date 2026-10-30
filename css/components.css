@@ -1,0 +1,112 @@
+/* Navbar */
+#navbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(5, 7, 10, .72); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; height: 88px; padding: 0 var(--pad); max-width: var(--max); margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--text); }
+.logo { width: auto; height: 36px; }
+.wordmark { font: 600 24px/1 var(--serif); }
+.wordmark small { display: block; margin-top: 4px; font: 9px var(--sans); letter-spacing: .5em; color: var(--muted); }
+.nav ul { list-style: none; display: flex; align-items: center; gap: 34px; margin: 0; padding: 0; }
+.nav ul a:not(.btn) { color: #aab4d0; text-decoration: none; font-size: 14px; padding-bottom: 8px; border-bottom: 1px solid transparent; }
+.nav ul a:not(.btn):hover, .nav ul a.active { color: var(--text); border-color: var(--accent); }
+.nav-toggle { display: none; background: none; border: 0; color: var(--text); font-size: 1.6rem; cursor: pointer; }
+@media (max-width: 900px) {
+  .nav-toggle { display: block; }
+  .nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 20px; background: var(--bg); padding: 24px var(--pad); border-bottom: 1px solid var(--border); }
+  .nav ul.open { display: flex; }
+}
+
+/* Hero */
+#hero { position: relative; overflow: hidden; }
+.hero-copy { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 52px; padding: 120px var(--pad) 96px; max-width: var(--max); margin: 0 auto; }
+.hero-copy h1 { font-size: clamp(2.6rem, 8.33vw, 120px); font-weight: 700; margin: 0; }
+.hero-welcome { align-self: flex-end; max-width: 560px; }
+.hero-welcome p { color: var(--text); font-size: 18px; font-weight: 500; margin: 0 0 26px; }
+.anchor { display: inline-flex; gap: 12px; align-items: center; color: var(--text); font: 600 14px var(--sans); text-decoration: none; }
+.anchor:hover img { transform: translateY(3px); }
+.anchor img { transition: transform .2s; }
+/* Width follows the 100vh cap so the box stays 16:9 and cover never crops the video; flush right. */
+.hero-image { position: relative; aspect-ratio: 16 / 9; width: min(92%, 100vh * 16 / 9); margin: 0 0 0 auto; }
+.hero-image video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .62; --fade-y: linear-gradient(transparent, #000 25%, #000 70%, transparent); --fade-x: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); -webkit-mask-image: var(--fade-y), var(--fade-x); -webkit-mask-composite: source-in; mask-image: var(--fade-y), var(--fade-x); mask-composite: intersect; }
+/* Planet markers: game-map style boxes that travel along the hidden disk orbit. */
+.disk-path { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; pointer-events: none; }
+.planet { position: absolute; z-index: 3; width: 18px; height: 18px; translate: -50% -50%; padding: 0; cursor: pointer; background: rgba(5, 174, 213, .15); border: 1px solid #05aed5; box-shadow: 0 0 12px rgba(5, 174, 213, .5); }
+.planet::before { content: ''; position: absolute; inset: 5px; background: #05aed5; }
+.planet::after { content: ''; position: absolute; inset: -7px; --h: linear-gradient(90deg, #05aed5 6px, transparent 6px calc(100% - 6px), #05aed5 0); --v: linear-gradient(#05aed5 6px, transparent 6px calc(100% - 6px), #05aed5 0); background: var(--h) top / 100% 1px no-repeat, var(--h) bottom / 100% 1px no-repeat, var(--v) left / 1px 100% no-repeat, var(--v) right / 1px 100% no-repeat; animation: pulse 2s ease-in-out infinite; }
+.planet-name { position: absolute; left: 50%; bottom: calc(100% + 12px); translate: -50% 4px; padding: 6px 10px; white-space: nowrap; font: 600 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--text); background: rgba(10, 50, 76, .85); border: 1px solid #05aed5; opacity: 0; pointer-events: none; transition: opacity .15s, translate .15s; }
+.planet:hover, .planet:focus-visible { background: rgba(5, 174, 213, .35); }
+.planet:hover .planet-name, .planet:focus-visible .planet-name { opacity: 1; translate: -50% 0; }
+@keyframes pulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .planet::after { animation: none; } }
+.deco { position: absolute; pointer-events: none; }
+.deco.nebula-a { width: 1000px; left: -400px; top: -400px; opacity: .5; }
+.deco.nebula-b { width: 880px; right: -400px; top: 200px; opacity: .35; }
+.deco.orbit { animation: spin 120s linear infinite; }
+.deco.orbit-lg { width: 600px; left: 10%; top: -400px; opacity: .18; }
+.deco.orbit-md { width: 400px; left: 36%; top: 280px; opacity: .14; animation-direction: reverse; }
+.deco.orbit-sm { width: 200px; left: 43%; top: 380px; opacity: .1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .deco.orbit { animation: none; } }
+@media (max-width: 900px) { .hero-copy { gap: 32px; padding-top: 48px; } .hero-welcome { align-self: flex-start; } }
+
+/* Cards (about, events, sponsors, officers) */
+.card {
+  background: rgba(11, 16, 32, .7); border: 1px solid var(--border); padding: 40px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.card h3 { font-size: 24px; }
+.card .icon { font-size: 1.8rem; margin-bottom: 16px; }
+.card .date { color: var(--cyan); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.card p { color: var(--muted); margin: 0; }
+.officer { text-align: center; }
+.avatar {
+  width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 16px;
+  display: grid; place-items: center; font: 600 1.4rem var(--sans);
+  background: radial-gradient(circle at 30% 30%, var(--accent), var(--surface));
+  box-shadow: 0 0 30px rgba(100, 99, 200, .35);
+}
+#events .grid { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
+.sponsor { display: grid; place-items: center; min-height: 140px; font: 20px var(--serif); color: var(--muted); }
+
+/* Contact */
+.contact-form { display: grid; gap: 16px; max-width: 520px; margin-top: 32px; }
+.contact-form label { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.contact-form input, .contact-form textarea {
+  font: inherit; font-size: 16px; padding: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); outline: none; }
+.contact-form .btn { justify-self: start; }
+.form-status { color: var(--cyan); min-height: 1.6em; margin: 0; }
+
+/* Footer */
+#footer { position: relative; z-index: 1; border-top: 1px solid var(--border); color: var(--muted-2); text-align: center; padding: 32px var(--pad); font-size: 13px; }
+
+/* Space-station HUD: glitching headline word, terminal label, scanlines */
+#hero::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: repeating-linear-gradient(transparent 0 2px, rgba(59, 174, 222, .035) 2px 3px); }
+.hud { font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: var(--cyan); }
+.hud::after { content: '_'; animation: blink 1s steps(1) infinite; }
+.glitch { position: relative; display: inline-block; color: var(--cyan); text-shadow: 0 0 18px rgba(59, 174, 222, .45); }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.glitch::before { color: var(--accent); }
+.glitch::after { color: #ff3df0; }
+.glitch.is-glitching { animation: jitter .12s steps(2) infinite; }
+.glitch.is-glitching::before { opacity: .85; animation: slice-a .3s steps(3) infinite; }
+.glitch.is-glitching::after { opacity: .85; animation: slice-b .25s steps(3) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes jitter { 50% { transform: translate(1px, -1px) skewX(-4deg); } }
+@keyframes slice-a {
+  0% { clip-path: inset(10% 0 70% 0); transform: translate(-4px, 0); }
+  50% { clip-path: inset(55% 0 20% 0); transform: translate(3px, 0); }
+  100% { clip-path: inset(30% 0 45% 0); transform: translate(-2px, 0); }
+}
+@keyframes slice-b {
+  0% { clip-path: inset(65% 0 10% 0); transform: translate(4px, 0); }
+  50% { clip-path: inset(15% 0 60% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(40% 0 35% 0); transform: translate(2px, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .hud::after { animation: none; } }

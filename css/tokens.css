@@ -1,0 +1,19 @@
+/* Design tokens: Figma concept + ACM Fest mood board website palette (accent, cyan) */
+:root {
+  color-scheme: dark;
+  --bg: #05070a;
+  --surface: #0b1020;
+  --border: #1f2a3d;
+  --accent: #6463c8;
+  --cyan: #3baede;
+  --text: #f5f7ff;
+  --text-soft: #d7e0f0;
+  --muted: #8ea0c7;
+  --muted-2: #7b879c;
+  /* Brand fonts (Figma ACM Branding): Good Head Pro headings, Mark Pro body. Both are licensed, so the
+     Google Fonts lookalikes after them render unless the brand fonts are installed. */
+  --serif: 'Good Head Pro', 'Barlow Semi Condensed', system-ui, sans-serif;
+  --sans: 'Mark Pro', Figtree, system-ui, sans-serif;
+  --pad: clamp(20px, 8.33vw, 120px);
+  --max: 1440px;
+}
